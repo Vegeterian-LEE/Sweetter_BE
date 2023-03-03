@@ -1,32 +1,35 @@
 package com.sparta.clonesweetter.entity;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor
 @Entity
-public class CommentLike {
+@AllArgsConstructor
+@Table(name = "post_like")
+public class PostLike {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    private Comment comment;
+    @JoinColumn(name = "project_id")
+    private Post post;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
-    public CommentLike(Comment comment, User user){
-        this.comment = comment;
+    public PostLike(Post post, User user){
+        this.post = post;
         this.user = user;
     }
+
 }
