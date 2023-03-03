@@ -1,3 +1,4 @@
+/*
 package com.sparta.clonesweetter.jwt;
 
 import io.jsonwebtoken.Claims;
@@ -42,3 +43,4 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     }
 
 }
+*/
