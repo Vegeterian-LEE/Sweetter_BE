@@ -12,7 +12,7 @@ env:
   S3_BUCKET_NAME: github-actions-s3-bucket-jk
   CODE_DEPLOY_APPLICATION_NAME: my-codedeploy-app
   CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: my-codedeploy-deployment-group
-  RESOURCE_PATH: ./cloneSweetter/src/main/resources/application.yml
+  RESOURCE_PATH: ./src/main/resources/application.yml
 
 permissions:
   contents: read
@@ -41,7 +41,7 @@ jobs:
       - run: gradle init
 
       - name: Run chmod to make gradlew executable
-        run: chmod +x ./cloneSweetter/gradlew
+        run: chmod +x ./gradlew
 
       - name: Set yaml file
         uses: microsoft/variable-substitution@v1
