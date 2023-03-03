@@ -20,7 +20,7 @@ public class UserService {
     @Transactional
     public StatusResponseDto signup(@Valid SignupRequestDto signupRequestDto){
         String username = signupRequestDto.getUsername();
-        String password = "null"; // = passwordEncoder.encode(signupRequestDto.getPassword());
+        String password = passwordEncoder.encode(signupRequestDto.getPassword());
         String nickname = signupRequestDto.getNickname();
         String email = signupRequestDto.getEmail();
 
