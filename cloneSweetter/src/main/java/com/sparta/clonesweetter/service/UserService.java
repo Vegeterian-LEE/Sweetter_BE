@@ -18,7 +18,7 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
     @Transactional
-    public void signup(@Valid SignupRequestDto signupRequestDto){
+    public StatusResponseDto signup(@Valid SignupRequestDto signupRequestDto){
         String username = signupRequestDto.getUsername();
         String password = "null"; // = passwordEncoder.encode(signupRequestDto.getPassword());
         String nickname = signupRequestDto.getNickname();
@@ -40,6 +40,7 @@ public class UserService {
 
         User user = new User(username, password, nickname, email, role);
         userRepository.save(user);
+        return  StatusResponseDto.success("가입 성공!") ;
     }
 
     @Transactional(readOnly = true)

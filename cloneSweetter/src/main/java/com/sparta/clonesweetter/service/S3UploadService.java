@@ -11,6 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -21,10 +23,14 @@ public class S3UploadService {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    public String uploadFiles(MultipartFile multipartFile, String dirName) throws IOException {
-        File uploadFile = convert(multipartFile)  // 파일 변환할 수 없으면 에러
+    public List<String> uploadFiles(List<MultipartFile> multipartFiles, String dirName) throws IOException {
+        List<String> imagesUrl = new ArrayList<>();
+        for (MultipartFile multipartfile : multipartFiles){
+        File uploadFile = convert(multipartfile)  // 파일 변환할 수 없으면 에러
                 .orElseThrow (() -> new IllegalArgumentException("error: MultipartFile -> File convert fail"));
-        return upload(uploadFile, dirName);
+        imagesUrl.add(upload(uploadFile, dirName));
+        }
+        return imagesUrl;
     }
 
     public String upload(File uploadFile, String filePath) {
