@@ -1,5 +1,6 @@
 package com.sparta.clonesweetter.dto;
 
+import com.sparta.clonesweetter.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,4 +12,12 @@ public class UserResponseDto {
     private String image;
     private String introduction;
     private String email;
+
+    public UserResponseDto(User user){
+        this.username = user.getUsername();
+        this.nickname = user.getNickname();
+        this.image = user.getImage();
+        this.introduction = user.getIntroduction();
+        this.email = user.getEmail();
+    }
 }
