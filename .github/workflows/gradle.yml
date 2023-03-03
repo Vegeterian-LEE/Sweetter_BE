@@ -28,6 +28,10 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+
+    - name: init with Gradle
+      uses: gradle/gradle-build-action@v2
+    - run: gradle init
         
     - name: Run chmod to make gradlew executable
       run: chmod +x ./cloneSweetter/gradlew
