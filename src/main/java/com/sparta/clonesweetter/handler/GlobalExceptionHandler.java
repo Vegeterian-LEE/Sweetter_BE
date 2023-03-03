@@ -21,5 +21,7 @@ public class GlobalExceptionHandler {
     public StatusResponseDto<?> handle(Exception ex){
         return StatusResponseDto.fail(400, ex.getMessage());
     }
+
+
 }
 

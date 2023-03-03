@@ -1,8 +1,9 @@
 /*
 package com.sparta.clonesweetter.jwt;
 
-import com.sparta.vikingband.enums.MemberRoleEnum;
-import com.sparta.vikingband.security.UserDetailsServiceImpl;
+
+import com.sparta.clonesweetter.entity.UserRoleEnum;
+import com.sparta.clonesweetter.security.UserDetailsServiceImpl;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
@@ -52,7 +53,7 @@ public class JwtUtil {
     }
 
     // 토큰 생성
-    public String createToken(String username, MemberRoleEnum role) {
+    public String createToken(String username, UserRoleEnum role) {
         Date date = new Date();
 
         return BEARER_PREFIX +
