@@ -1,8 +1,6 @@
 package com.sparta.clonesweetter.service;
 
-import com.sparta.clonesweetter.dto.LoginRequestDto;
-import com.sparta.clonesweetter.dto.SignupRequestDto;
-import com.sparta.clonesweetter.dto.UserResponseDto;
+import com.sparta.clonesweetter.dto.*;
 import com.sparta.clonesweetter.entity.User;
 import com.sparta.clonesweetter.entity.UserRoleEnum;
 import com.sparta.clonesweetter.repository.UserRepository;
@@ -44,7 +42,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-/*    @Transactional(readOnly = true)
+    @Transactional(readOnly = true)
     public UserResponseDto login(LoginRequestDto loginRequestDto, HttpServletResponse response){
         String username = loginRequestDto.getUsername();
         String password = loginRequestDto.getPassword();
@@ -59,5 +57,29 @@ public class UserService {
 
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUsername(), user.getRole()));
         return new UserResponseDto(user);
-    }*/
+    }
+
+    @Transactional
+    public UserResponseDto updateProfile(UserRequestDto userRequestDto, User user) {
+        User master = userRepository.findById(user.getId()).orElseThrow(
+                () -> new IllegalArgumentException("유저가 존재하지 않습니다."));
+        if (!userRequestDto.getNewPassword().isEmpty() && userRequestDto.getNewPassword().equals(userRequestDto.getNewPasswordConfirm())){
+            master.updatePassword(passwordEncoder.encode(userRequestDto.getNewPassword()));
+        }
+        else if (!userRequestDto.getNewPassword().equals(userRequestDto.getNewPasswordConfirm())) {
+            throw new IllegalArgumentException("변경하려는 비밀 번호가 일치하지 않습니다.");
+        }
+        master.update(userRequestDto);
+        return new UserResponseDto(master);
+    }
+
+    @Transactional
+    public boolean checkPassword(PasswordRequestDto passwordRequestDto, User user) {
+        User master = userRepository.findById(user.getId()).orElseThrow(
+                () -> new IllegalArgumentException("유저가 존재하지 않습니다."));
+        if (!passwordEncoder.matches(passwordRequestDto.getPassword(), master.getPassword())){
+            throw new IllegalArgumentException("비밀 번호가 틀렸습니다.");
+        }
+        return true;
+    }
 }

@@ -1,5 +1,6 @@
 package com.sparta.clonesweetter.entity;
 
+import com.sparta.clonesweetter.dto.UserRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,5 +42,16 @@ public class User extends TimeStamped{
         this.nickname = nickName;
         this.email = email;
         this.role = role;
+    }
+
+    public void update(UserRequestDto userRequestDto) {
+        this.image = userRequestDto.getImage();
+        this.introduction = userRequestDto.getIntroduction();
+        this.nickname = userRequestDto.getNickname();
+        this.email = userRequestDto.getEmail();
+    }
+
+    public void updatePassword(String newPassword) {
+        this.password = newPassword;
     }
 }

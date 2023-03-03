@@ -1,8 +1,7 @@
 package com.sparta.clonesweetter.controller;
 
-import com.sparta.clonesweetter.dto.LoginRequestDto;
-import com.sparta.clonesweetter.dto.SignupRequestDto;
-import com.sparta.clonesweetter.dto.UserResponseDto;
+import com.sparta.clonesweetter.dto.*;
+import com.sparta.clonesweetter.security.UserDetailsImpl;
 import com.sparta.clonesweetter.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,5 +28,17 @@ public class UserController {
     @PostMapping("/user/login")
     public UserResponseDto login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response){
         return userService.login(loginRequestDto, response);
+    }
+
+    @PostMapping("/user/checkpw")
+    public boolean checkPassword(@RequestBody PasswordRequestDto passwordRequestDto,
+                                 @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return userService.checkPassword(passwordRequestDto, userDetails.getUser());
+    }
+    //내 정보 변경
+    @PutMapping("/mypage")
+    public UserResponseDto updateProfile(@RequestBody UserRequestDto userRequestDto,
+                                         @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return userService.updateProfile(userRequestDto, userDetails.getUser());
     }
 }
