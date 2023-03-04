@@ -32,6 +32,7 @@ public class CommentService {
 //        for (Comment)
 //    }
 
+    // 댓글 작성
     public StatusResponseDto<CommentResponseDto> createComment(Long id, String content, UserDetailsImpl userDetails) {
 
         Post post = postRepository.findById(id).orElseThrow(() -> new NullPointerException("등록되지 않은 게시글입니다."));
@@ -41,6 +42,7 @@ public class CommentService {
     }
 
 
+    // 댓글 삭제
     public StatusResponseDto<String> deleteComment(Long id, UserDetailsImpl userDetails) throws AuthenticationException {
         User user = userDetails.getUser();
         Comment comment = commentRepository.findById(id).orElseThrow(
@@ -54,6 +56,7 @@ public class CommentService {
         }
     }
 
+    // 댓글 좋아요
     public StatusResponseDto<String> likeComment(Long id, UserDetailsImpl userDetails) {
         Comment comment = commentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("존재하지 않는 댓글"));
         Optional<CommentLike> optionalCommentLike = commentLikeRepository.findByCommentAndUser(comment, userDetails.getUser());
